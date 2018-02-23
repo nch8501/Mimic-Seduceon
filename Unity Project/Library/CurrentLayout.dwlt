@@ -176,8 +176,8 @@ MonoBehaviour:
     y: 0
     width: 236
     height: 653
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -367,9 +367,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 66280000
-    m_LastClickedID: 10342
-    m_ExpandedIDs: 7ce1ffff9af7ffff86fbffff0000000058280000
+    m_SelectedIDs: 122c0000
+    m_LastClickedID: 0
+    m_ExpandedIDs: a445feff9647feff6048feff1249feff06d1ffffc4dbffffc8dbffff86fbffff00000000d8270000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -388,7 +388,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 8}
     m_SearchString: 
   m_ExpandedScenes:
-  - New Scene
+  - playerMovement
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -420,14 +420,14 @@ MonoBehaviour:
     height: 632
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 511.7403547125658
+  lastFramingTime: 108.73199844578768
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.0775956, y: -0.052286066, z: 0.006341644}
+    m_Target: {x: -2.2369657, y: -0.3577486, z: -0.04469599}
     speed: 2
-    m_Value: {x: -0.0775956, y: -0.052286066, z: 0.006341644}
+    m_Value: {x: -2.2369657, y: -0.3577486, z: -0.04469599}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -455,9 +455,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 9.358367
+    m_Target: 8.120266
     speed: 2
-    m_Value: 9.358367
+    m_Value: 8.120266
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -541,7 +541,7 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Scenes
   m_LastFoldersGridSize: 78
-  m_LastProjectPath: C:\Users\nick52\Desktop\Mimic Seduceon
+  m_LastProjectPath: C:\Users\nick52\Desktop\Mimic Seduceon\Unity Project
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
