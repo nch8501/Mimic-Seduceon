@@ -29,6 +29,17 @@ public class playerMovement : MonoBehaviour {
         //check keyboard input
         if(Input.anyKey)
         {
+            /**if (Input.GetMouseButton(1)) //Code for mouse movement, 100% needs to be optimized if used
+            {
+                Vector2 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                Vector3 playerPos = Camera.main.WorldToViewportPoint(playerObject.transform.position);
+
+                Vector2 translateVector = mousePos - new Vector2(playerPos.x, playerPos.y);
+                translateVector.Normalize();
+                translateVector /= 10;
+
+                playerObject.transform.Translate(translateVector);
+            }**/
             //y movement
             if (Input.GetKey(KeyCode.W))
             {
