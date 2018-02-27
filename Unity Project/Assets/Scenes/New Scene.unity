@@ -136,6 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObject: {fileID: 837586627}
   playerSprite: {fileID: 609081867}
+  speed: 5
 --- !u!1 &1119413637
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,15 +227,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4722715801194944, guid: 2f6d396a905a15245a89ef2721970d25, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1.5822115
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4722715801194944, guid: 2f6d396a905a15245a89ef2721970d25, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.38117993
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4722715801194944, guid: 2f6d396a905a15245a89ef2721970d25, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.006341644
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4722715801194944, guid: 2f6d396a905a15245a89ef2721970d25, type: 2}
       propertyPath: m_LocalRotation.x

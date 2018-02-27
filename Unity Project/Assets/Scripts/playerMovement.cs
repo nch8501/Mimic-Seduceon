@@ -7,7 +7,8 @@ public class playerMovement : MonoBehaviour {
     public GameObject playerObject;   //the player object
     public GameObject playerSprite;   //the player sprite
 
-
+    [SerializeField]
+    private float speed;
 
 
 
@@ -40,25 +41,29 @@ public class playerMovement : MonoBehaviour {
 
                 playerObject.transform.Translate(translateVector);
             }**/
+
+            Vector3 movement = Vector3.zero;
             //y movement
             if (Input.GetKey(KeyCode.W))
             {
-                playerObject.transform.Translate(0.0f, 0.1f, 0.0f);
+                movement += Vector3.up;
             }
             else if(Input.GetKey(KeyCode.S))
             {
-                playerObject.transform.Translate(0.0f, -0.1f, 0.0f);
+                movement += Vector3.down;
             }
 
             //x movement
             if (Input.GetKey(KeyCode.D))
             {
-                playerObject.transform.Translate(0.1f, 0.0f, 0.0f);
+                movement += Vector3.right;
             }
             else if (Input.GetKey(KeyCode.A))
             {
-                playerObject.transform.Translate(-0.1f, 0.0f, 0.0f);
+                movement += Vector3.left;
             }
+
+            transform.position+=movement.normalized * speed * Time.deltaTime;
         }
     }
 
@@ -72,7 +77,7 @@ public class playerMovement : MonoBehaviour {
         Vector3 playerPos = Camera.main.WorldToViewportPoint(playerObject.transform.position);
 
         //find angle between these
-        float angle = Mathf.Atan2(playerPos.y - mousePos.y, playerPos.x - mousePos.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(playerPos.y - mousePos.y, playerPos.x - mousePos.x) * Mathf.Rad2Deg + 90;
 
         //set player angle
         playerSprite.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, angle));
