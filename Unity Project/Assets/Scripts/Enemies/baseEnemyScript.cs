@@ -15,6 +15,10 @@ public class baseEnemyScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //setup playerObject
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+
+
         //setup player weapon
         playerWeapon = playerObject.transform.GetChild(0).transform.GetChild(0).gameObject;
         colliding = true;

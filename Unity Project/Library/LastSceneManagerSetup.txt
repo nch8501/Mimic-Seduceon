@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/playerAttacking.unity
+- path: Assets/Scenes/basicEnemyManager.unity
   isLoaded: 1
   isActive: 1

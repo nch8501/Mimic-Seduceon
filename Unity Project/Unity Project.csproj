@@ -279,8 +279,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\baseEnemyScript.cs" />
-    <Compile Include="Assets\Scripts\enemyColliding.cs" />
+    <Compile Include="Assets\Scripts\Enemies\baseEnemyScript.cs" />
+    <Compile Include="Assets\Scripts\Enemies\enemyColliding.cs" />
+    <Compile Include="Assets\Scripts\Managers\enemyManagerScript.cs" />
     <Compile Include="Assets\Scripts\playerMovement.cs" />
     <Compile Include="Assets\Scripts\WeaponScript.cs" />
   </ItemGroup>
