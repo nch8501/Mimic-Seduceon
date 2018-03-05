@@ -6,6 +6,7 @@ public class WeaponScript : MonoBehaviour {
 
     //weapon object
     public GameObject weaponObject;
+    GameObject playerObject;
 
     //whether or not the weapon is attacking
     public bool isAttacking;
@@ -19,6 +20,9 @@ public class WeaponScript : MonoBehaviour {
         isAttacking = false;
         attackWindow = 0.0f;
         weaponObject.GetComponent<SpriteRenderer>().enabled = false;
+        weaponObject.GetComponent<BoxCollider2D>().enabled = false;
+
+        playerObject = GameObject.FindGameObjectWithTag("PlayerSprite");
 		
 	}
 	
@@ -28,8 +32,10 @@ public class WeaponScript : MonoBehaviour {
         //check if attacking
         if(isAttacking)
         {
+            weaponObject.GetComponent<BoxCollider2D>().enabled = true;
+
             //check if attackWindow is gone
-            if(attackWindow <= 0.0f)
+            if (attackWindow <= 0.0f)
             {
                 StopAttacking();
             }
@@ -65,6 +71,7 @@ public class WeaponScript : MonoBehaviour {
     {
         isAttacking = false;
         weaponObject.GetComponent<SpriteRenderer>().enabled = false;
+        weaponObject.GetComponent<BoxCollider2D>().enabled = false;
         attackWindow = 0.0f;
     }
 
