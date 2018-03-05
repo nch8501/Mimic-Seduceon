@@ -12,8 +12,6 @@ public class enemyManagerScript : MonoBehaviour {
     public GameObject enemy1;
 
 
-
-
 	// Use this for initialization
 	void Start () {
 
@@ -26,10 +24,18 @@ public class enemyManagerScript : MonoBehaviour {
         //add enemy to enemies
         enemies.Add(temp);
 
-        pos.Set(1.0f, 5.0f, 0.0f);
+        pos.Set(1.0f, 4.0f, 0.0f);
         temp = GameObject.Instantiate(enemy1, pos, quat);
         enemies.Add(temp);
-	}
+
+        pos.Set(-2.0f, 0.0f, 0.0f);
+        temp = GameObject.Instantiate(enemy1, pos, quat);
+        enemies.Add(temp);
+
+        pos.Set(-5.0f, -1.0f, 0.0f);
+        temp = GameObject.Instantiate(enemy1, pos, quat);
+        enemies.Add(temp);
+    }
 	
 	// Update is called once per frame
 	void Update () {

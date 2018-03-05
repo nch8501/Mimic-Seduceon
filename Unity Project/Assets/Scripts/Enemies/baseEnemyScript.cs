@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class baseEnemyScript : MonoBehaviour {
 
-    public GameObject baseEnemyObject;
+    public GameObject baseEnemyObject;  //this Gameobject
 
-    public GameObject playerObject;
-    public GameObject playerWeapon;
 
-    public bool colliding;
-    public int col = 0;
+    public GameObject playerObject; //the player Gameobject
+    public GameObject playerWeapon; //the player weapon Gameobject
+
+    public int health; //enemy's health
 
 
 	// Use this for initialization
@@ -18,16 +18,16 @@ public class baseEnemyScript : MonoBehaviour {
         //setup playerObject
         playerObject = GameObject.FindGameObjectWithTag("Player");
 
-
         //setup player weapon
         playerWeapon = playerObject.transform.GetChild(0).transform.GetChild(0).gameObject;
-        colliding = true;
 
-
+        health = 1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        
+        CheckHealth();
 
 	}
 
@@ -40,14 +40,22 @@ public class baseEnemyScript : MonoBehaviour {
         {
             if(playerWeapon.GetComponent<WeaponScript>().isAttacking)
             {
-                
-                Destroy(baseEnemyObject);
-            }
-            
+                //enemy has been hit
+                health--;
+            }   
         }
-
-
-        
     }
+
+    //Checks if Enemy Health has been reduced to 0
+    void CheckHealth()
+    {
+        if(health <= 0)
+        {
+            //enemy is dead, destroy it
+            Destroy(baseEnemyObject);
+        }
+    }
+
+
 
 }

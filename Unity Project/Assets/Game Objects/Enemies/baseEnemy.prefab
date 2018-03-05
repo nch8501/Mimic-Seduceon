@@ -111,8 +111,7 @@ MonoBehaviour:
   playerObject: {fileID: 1661559292201026, guid: 2f6d396a905a15245a89ef2721970d25,
     type: 2}
   playerWeapon: {fileID: 0}
-  colliding: 0
-  col: 0
+  health: 0
 --- !u!212 &212313418913419458
 SpriteRenderer:
   m_ObjectHideFlags: 1
