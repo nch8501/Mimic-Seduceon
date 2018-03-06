@@ -11,6 +11,7 @@ public class baseEnemyScript : MonoBehaviour {
     public GameObject playerWeapon; //the player weapon Gameobject
 
     public int health; //enemy's health
+    private const float SPEED = 2.5f; // NYOOM
 
 
 	// Use this for initialization
@@ -26,9 +27,8 @@ public class baseEnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+        Movement();
         CheckHealth();
-
 	}
 
     //check if enemy is colliding with something
@@ -56,6 +56,19 @@ public class baseEnemyScript : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Move the Enemy toward the player
+    /// </summary>
+    void Movement()
+    {
+        // Get the vector from the enemy to the player
+        Vector3 direction = Vector3.zero;
+        direction += playerObject.transform.position - transform.position;
 
+        // Make the vector speed long
+        direction = direction.normalized * SPEED;
 
+        // Add to the player as time dependent
+        transform.position += direction * Time.deltaTime;
+    }
 }
