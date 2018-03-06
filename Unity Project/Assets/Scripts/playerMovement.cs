@@ -9,11 +9,15 @@ public class playerMovement : MonoBehaviour {
 
     //Roll Variables
     public float RollDistance = 3;
-    public float rollSpeed = 60;
+    public float rollSpeed = 15;
     private float rollWindow = 0;
     private float rollWindowCap = 1;
     private bool isRolling = false;
     private Vector3 rollDestination = Vector3.zero;
+
+    private objectScript interactingObject;
+    private bool canInteract = false;
+    private bool isInteracting = false;
 
     [SerializeField]
     private float speed;
@@ -27,9 +31,18 @@ public class playerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Movement();
-        RotateTowardsMouse();
-        Roll();
+
+        if (isInteracting) //if you're interacting with something, you shouldn't be moving all over the place
+        {
+            Interact();
+        }
+        else
+        {
+            Movement();
+            RotateTowardsMouse();
+            Roll();
+        }
+       // CheckForObjects();
 	}
 
     //controls player movement
@@ -70,6 +83,13 @@ public class playerMovement : MonoBehaviour {
             {
                 movement += Vector3.left;
             }
+            
+            if (Input.GetKeyDown(KeyCode.E) && canInteract) //Begin Conversation/Interaction
+            {
+                canInteract = false;
+                isInteracting = true;
+                interactingObject.Interact();
+            }
 
             if (Input.GetKeyDown(KeyCode.Space) && !isRolling)
             {
@@ -77,6 +97,20 @@ public class playerMovement : MonoBehaviour {
             }
 
             transform.position+=movement.normalized * speed * Time.deltaTime;
+        }
+    }
+
+    void Interact()
+    {
+        if (Input.GetKey(KeyCode.Escape)) //Get me out of this conversation!
+        {
+            interactingObject.FinishInteracting(false);
+        }
+
+        if (!interactingObject.isActiveObject) //if the object is done with you, you're done with the object bud
+        {
+            isInteracting = false;
+            canInteract = false;
         }
     }
 
@@ -132,5 +166,26 @@ public class playerMovement : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<objectScript>()!= null)
+        {
+            canInteract = true;
+            interactingObject = collision.gameObject.GetComponent<objectScript>();
+            interactingObject.overlayText.enabled = true;
 
+
+            //interactingObject.Overlay(); maybe this will be useful sometime
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<objectScript>() != null)
+        {
+            canInteract = false;
+            interactingObject.overlayText.enabled = false;
+        }
+        
+    }
 }
