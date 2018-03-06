@@ -15,7 +15,7 @@ public class WeaponScript : MonoBehaviour {
 
     //Swing variables
     public float swingSpeed = 5.0f;
-    public float swingRadius = 1.0f;
+    public float swingRadius = 3.0f;
     private float swingAngle = 0.0f;
     private Vector3 startingPosition;
     private Quaternion startingRotation;
@@ -71,9 +71,9 @@ public class WeaponScript : MonoBehaviour {
             isAttacking = true;
             weaponObject.GetComponent<SpriteRenderer>().enabled = true;
 
-            weaponObject.GetComponent<Transform>().rotation = startingRotation;
-            weaponObject.GetComponent<Transform>().position = (playerObject.GetComponent<Transform>().up + startingPosition);
-
+            //weaponObject.GetComponent<Transform>().rotation = startingRotation;
+            weaponObject.GetComponent<Transform>().localPosition = startingPosition;//(playerObject.GetComponent<Transform>().up + startingPosition);
+            
             //increase attackWindow
             attackWindow = 1.0f;
         }
@@ -81,13 +81,24 @@ public class WeaponScript : MonoBehaviour {
 
     void Attack()
     {
-        //Vector3 rotationAxis = playerObject.GetComponent<Transform>().position;
-        //weaponObject.GetComponent<Transform>().Rotate(0, 0, 5.0f, Space.Self);
+        //Vector3 rotationAxis = playerObject.GetComponent<Transform>().localPosition;
+       // weaponObject.GetComponent<Transform>().Rotate(0, 0, 5.0f, Space.Self);
 
         swingAngle -= swingSpeed * Time.deltaTime;
         Vector3 offset = new Vector3(Mathf.Sin(swingAngle), Mathf.Cos(swingAngle), 0) * swingRadius;
-        weaponObject.GetComponent<Transform>().localPosition = playerObject.GetComponent<Transform>().position + offset;
+        weaponObject.GetComponent<Transform>().localPosition = playerObject.GetComponent<Transform>().localPosition + offset;
 
+
+        weaponObject.transform.right = -(playerObject.transform.localPosition - weaponObject.transform.localPosition);
+
+        //Vector3 target = playerObject.GetComponent<Transform>().localPosition - weaponObject.GetComponent<Transform>().localPosition;
+        //weaponObject.GetComponent<Transform>().LookAt(target);
+
+
+        //Vector3 vectorToTarget = playerObject.GetComponent<Transform>().position - weaponObject.GetComponent<Transform>().position;
+        //float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+        //Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 0);
         //weaponObject.GetComponent<Transform>().localPosition = Vector3.Slerp(startingPosition, (startingPosition - new Vector3(-2, 0, -20)), 0.1f);
     }
 

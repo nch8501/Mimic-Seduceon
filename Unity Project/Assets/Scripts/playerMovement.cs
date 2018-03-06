@@ -7,6 +7,14 @@ public class playerMovement : MonoBehaviour {
     public GameObject playerObject;   //the player object
     public GameObject playerSprite;   //the player sprite
 
+    //Roll Variables
+    public float RollDistance = 3;
+    public float rollSpeed = 60;
+    private float rollWindow = 0;
+    private float rollWindowCap = 1;
+    private bool isRolling = false;
+    private Vector3 rollDestination = Vector3.zero;
+
     [SerializeField]
     private float speed;
 
@@ -21,7 +29,7 @@ public class playerMovement : MonoBehaviour {
 	void Update () {
         Movement();
         RotateTowardsMouse();
-		
+        Roll();
 	}
 
     //controls player movement
@@ -63,6 +71,11 @@ public class playerMovement : MonoBehaviour {
                 movement += Vector3.left;
             }
 
+            if (Input.GetKeyDown(KeyCode.Space) && !isRolling)
+            {
+                isRolling = true;
+            }
+
             transform.position+=movement.normalized * speed * Time.deltaTime;
         }
     }
@@ -86,7 +99,38 @@ public class playerMovement : MonoBehaviour {
 
     }
 
+    void Roll()
+    {
+        if (isRolling && rollWindow <= rollWindowCap)
+        {
+            if(rollDestination == Vector3.zero)
+            {
+                //Get mouse position
+                Vector3 mousePos = Input.mousePosition;
 
+                //Get player position
+                Vector3 playerPos = playerObject.transform.position;
+
+                //Get vector between them
+                Vector3 rollDirection = mousePos - playerPos;
+                rollDirection.Normalize();
+
+                rollDestination = rollDirection * RollDistance;
+                print(rollDestination);
+            }
+
+            print(Vector3.Lerp(playerObject.transform.position, rollDestination, Time.deltaTime * rollSpeed));
+            
+            rollWindow += Time.deltaTime * rollSpeed;
+            playerObject.transform.position += Vector3.Lerp(playerObject.transform.position, rollDestination * Time.deltaTime, Time.deltaTime * rollSpeed);
+        }
+        else
+        {
+            rollWindow = 0;
+            rollDestination = Vector3.zero;
+            isRolling = false;
+        }
+    }
 
 
 }
