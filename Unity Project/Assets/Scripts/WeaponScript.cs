@@ -13,6 +13,12 @@ public class WeaponScript : MonoBehaviour {
 
     public float attackWindow;
 
+    //Swing variables
+    public float swingSpeed = 5.0f;
+    public float swingRadius = 1.0f;
+    private float swingAngle = 0.0f;
+    private Vector3 startingPosition;
+    private Quaternion startingRotation;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +29,9 @@ public class WeaponScript : MonoBehaviour {
         weaponObject.GetComponent<BoxCollider2D>().enabled = false;
 
         playerObject = GameObject.FindGameObjectWithTag("PlayerSprite");
-		
+
+        startingPosition = weaponObject.GetComponent<Transform>().localPosition;
+        startingRotation = weaponObject.GetComponent<Transform>().rotation;
 	}
 	
 	// Update is called once per frame
@@ -42,29 +50,45 @@ public class WeaponScript : MonoBehaviour {
             else
             {
                 //decrease attackWindow
+                Attack();
                 attackWindow -= .1f;
             }
         }
         else
         {
             //check if attacking
-            Attacking();
+            AttackCheck();
         }
 	}
 
 
-    void Attacking()
+    void AttackCheck()
     {
         //check if spacebar is pressed
-        if(Input.GetKey(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Mouse0) && attackWindow <= 0.0f)
         {
             //set isAttacking to true
             isAttacking = true;
             weaponObject.GetComponent<SpriteRenderer>().enabled = true;
 
+            weaponObject.GetComponent<Transform>().rotation = startingRotation;
+            weaponObject.GetComponent<Transform>().position = (playerObject.GetComponent<Transform>().up + startingPosition);
+
             //increase attackWindow
-            attackWindow = 2.0f;
+            attackWindow = 1.0f;
         }
+    }
+
+    void Attack()
+    {
+        //Vector3 rotationAxis = playerObject.GetComponent<Transform>().position;
+        //weaponObject.GetComponent<Transform>().Rotate(0, 0, 5.0f, Space.Self);
+
+        swingAngle -= swingSpeed * Time.deltaTime;
+        Vector3 offset = new Vector3(Mathf.Sin(swingAngle), Mathf.Cos(swingAngle), 0) * swingRadius;
+        weaponObject.GetComponent<Transform>().localPosition = playerObject.GetComponent<Transform>().position + offset;
+
+        //weaponObject.GetComponent<Transform>().localPosition = Vector3.Slerp(startingPosition, (startingPosition - new Vector3(-2, 0, -20)), 0.1f);
     }
 
     void StopAttacking()
@@ -73,6 +97,7 @@ public class WeaponScript : MonoBehaviour {
         weaponObject.GetComponent<SpriteRenderer>().enabled = false;
         weaponObject.GetComponent<BoxCollider2D>().enabled = false;
         attackWindow = 0.0f;
+        swingAngle = 0.0f;
     }
 
 
