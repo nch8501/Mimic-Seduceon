@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/wallsWorking.unity
-=======
-- path: Assets/Scenes/basicEnemyManager.unity
->>>>>>> bac2f08c34860ad263652f4e6e63d255eb55fe88
+- path: Assets/Scenes/Builds/Build 3.unity
   isLoaded: 1
   isActive: 1

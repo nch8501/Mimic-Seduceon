@@ -13,6 +13,11 @@ public class baseEnemyScript : MonoBehaviour {
     public int health; //enemy's health
     private const float SPEED = 2.5f; // NYOOM
 
+    public bool isInvincible;
+    public float invincibilityFrames;
+
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +27,11 @@ public class baseEnemyScript : MonoBehaviour {
         //setup player weapon
         playerWeapon = playerObject.transform.GetChild(0).transform.GetChild(0).gameObject;
 
-        health = 1;
+        health = 2;
+
+        //setup Invincibility
+        isInvincible = false;
+        invincibilityFrames = 0.0f;
 	}
 	
 	// Update is called once per frame
@@ -34,14 +43,23 @@ public class baseEnemyScript : MonoBehaviour {
     //check if enemy is colliding with something
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Colliding");
+        
         //check if player sword is being used
         if (collision.gameObject == playerWeapon)
         {
             if(playerWeapon.GetComponent<WeaponScript>().isAttacking)
             {
+                //if enemy is not invincible
+                if (!isInvincible)
+                {
+                    health--;
+                }
+
+
                 //enemy has been hit
-                health--;
+                Invincibility();
+
+                
             }   
         }
     }
@@ -71,4 +89,28 @@ public class baseEnemyScript : MonoBehaviour {
         // Add to the player as time dependent
         transform.position += direction * Time.deltaTime;
     }
+
+    //temporarily makes the enemy invincible
+    void Invincibility()
+    {
+        //make enemy invincible
+        isInvincible = true;
+
+        //check if enough time has passed
+        if(invincibilityFrames >= 0.125f)
+        {
+            //reset invincibility
+            invincibilityFrames = 0.0f;
+            isInvincible = false;
+        }
+        else
+        {
+            Debug.Log("invincible");
+            invincibilityFrames += Time.deltaTime;
+        }
+    }
+
+
+
+
 }
