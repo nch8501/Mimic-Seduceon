@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //This Script holds all of the current enemies in the game
-public class enemyManagerScript : MonoBehaviour {
+public class EnemyManager : MonoBehaviour {
 
+    [SerializeField]
+    private GameObject[] enemyPrefabs;
 
     public List<GameObject> enemies = new List<GameObject>();   //list of all active enemies
 
@@ -20,20 +22,20 @@ public class enemyManagerScript : MonoBehaviour {
         Vector3 pos = new Vector3(2.0f, 0.0f, 0.0f);
         Quaternion quat = new Quaternion();
    
-        GameObject temp = GameObject.Instantiate(enemy1, pos, quat);
+        GameObject temp = Instantiate(enemy1, pos, quat);
         //add enemy to enemies
         enemies.Add(temp);
 
         pos.Set(1.0f, 4.0f, 0.0f);
-        temp = GameObject.Instantiate(enemy1, pos, quat);
+        temp = Instantiate(enemy1, pos, quat);
         enemies.Add(temp);
 
         pos.Set(-2.0f, 0.0f, 0.0f);
-        temp = GameObject.Instantiate(enemy1, pos, quat);
+        temp = Instantiate(enemy1, pos, quat);
         enemies.Add(temp);
 
         pos.Set(-5.0f, -1.0f, 0.0f);
-        temp = GameObject.Instantiate(enemy1, pos, quat);
+        temp = Instantiate(enemy1, pos, quat);
         enemies.Add(temp);
     }
 	
@@ -50,7 +52,7 @@ public class enemyManagerScript : MonoBehaviour {
         Quaternion quat = new Quaternion();
 
         //Instantiate the enemy
-        GameObject temp = GameObject.Instantiate(enemy, pos, quat);
+        GameObject temp = Instantiate(enemy, pos, quat);
 
         //Add the enemy
         enemies.Add(temp);
