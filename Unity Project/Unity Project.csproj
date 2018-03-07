@@ -283,7 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\cameraController.cs" />
-    <Compile Include="Assets\Scripts\Enemies\baseEnemyScript.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\Managers\enemyManagerScript.cs" />
     <Compile Include="Assets\Scripts\mimicScript.cs" />
     <Compile Include="Assets\Scripts\objectScript.cs" />

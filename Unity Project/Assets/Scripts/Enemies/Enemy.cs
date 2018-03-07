@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class baseEnemyScript : MonoBehaviour {
-
-    public GameObject baseEnemyObject;  //this Gameobject
-
+public class Enemy : MonoBehaviour {
 
     public GameObject playerObject; //the player Gameobject
     public GameObject playerWeapon; //the player weapon Gameobject
 
     public int health; //enemy's health
-    private const float SPEED = 2.5f; // NYOOM
+
+    [SerializeField]
+    private float SPEED;
 
     public bool isInvincible;
     public float invincibilityFrames;
@@ -70,7 +69,7 @@ public class baseEnemyScript : MonoBehaviour {
         if(health <= 0)
         {
             //enemy is dead, destroy it
-            Destroy(baseEnemyObject);
+            Destroy(gameObject);
         }
     }
 
@@ -109,8 +108,5 @@ public class baseEnemyScript : MonoBehaviour {
             invincibilityFrames += Time.deltaTime;
         }
     }
-
-
-
 
 }
