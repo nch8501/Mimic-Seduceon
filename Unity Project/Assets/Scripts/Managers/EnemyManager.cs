@@ -5,13 +5,12 @@ using UnityEngine;
 //This Script holds all of the current enemies in the game
 public class EnemyManager : MonoBehaviour {
 
+    // Fields
+    // All Types of Enemy prefab
     [SerializeField]
     private GameObject[] enemyPrefabs;
 
     public List<GameObject> enemies = new List<GameObject>();   //list of all active enemies
-
-    //Different types of enemies
-    public GameObject enemy1;
 
 
 	// Use this for initialization
@@ -22,20 +21,20 @@ public class EnemyManager : MonoBehaviour {
         Vector3 pos = new Vector3(2.0f, 0.0f, 0.0f);
         Quaternion quat = new Quaternion();
    
-        GameObject temp = Instantiate(enemy1, pos, quat);
+        GameObject temp = Instantiate(RandomEnemyPrefab(), pos, quat);
         //add enemy to enemies
         enemies.Add(temp);
 
         pos.Set(1.0f, 4.0f, 0.0f);
-        temp = Instantiate(enemy1, pos, quat);
+        temp = Instantiate(RandomEnemyPrefab(), pos, quat);
         enemies.Add(temp);
 
         pos.Set(-2.0f, 0.0f, 0.0f);
-        temp = Instantiate(enemy1, pos, quat);
+        temp = Instantiate(RandomEnemyPrefab(), pos, quat);
         enemies.Add(temp);
 
         pos.Set(-5.0f, -1.0f, 0.0f);
-        temp = Instantiate(enemy1, pos, quat);
+        temp = Instantiate(RandomEnemyPrefab(), pos, quat);
         enemies.Add(temp);
     }
 	
@@ -80,9 +79,12 @@ public class EnemyManager : MonoBehaviour {
         }
     }
 
-
-
-
-
-
+    /// <summary>
+    /// Get a random enemy from the prefab array
+    /// </summary>
+    /// <returns>An Enemy from the Prefab array</returns>
+    private GameObject RandomEnemyPrefab()
+    {
+        return enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+    }
 }
