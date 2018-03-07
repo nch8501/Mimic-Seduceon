@@ -288,6 +288,7 @@
     <Compile Include="Assets\Scripts\mimicScript.cs" />
     <Compile Include="Assets\Scripts\objectScript.cs" />
     <Compile Include="Assets\Scripts\playerMovement.cs" />
+    <Compile Include="Assets\Scripts\playerScript.cs" />
     <Compile Include="Assets\Scripts\WeaponScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
