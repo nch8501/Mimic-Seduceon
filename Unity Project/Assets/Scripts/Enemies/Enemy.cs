@@ -42,10 +42,13 @@ public class Enemy : MonoBehaviour {
     //check if enemy is colliding with something
     private void OnTriggerStay2D(Collider2D collision)
     {
-        
+        print("Colliding");
+        print(collision);
         //check if player sword is being used
         if (collision.gameObject == playerWeapon)
         {
+            print("Player hit");
+
             if(playerWeapon.GetComponent<WeaponScript>().isAttacking)
             {
                 //if enemy is not invincible
@@ -54,7 +57,9 @@ public class Enemy : MonoBehaviour {
                     health--;
                 }
 
+                Debug.Log("Hit");
 
+           
                 //enemy has been hit
                 Invincibility();
 

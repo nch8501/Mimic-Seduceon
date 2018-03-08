@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Builds/Build 3.unity
+- path: Assets/Scenes/wallsWorking.unity
   isLoaded: 1
   isActive: 1
