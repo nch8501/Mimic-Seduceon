@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
 
     public GameObject playerObject; //the player Gameobject
     public GameObject playerWeapon; //the player weapon Gameobject
@@ -18,8 +19,9 @@ public class Enemy : MonoBehaviour {
 
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         //setup playerObject
         playerObject = GameObject.FindGameObjectWithTag("Player");
 
@@ -31,13 +33,15 @@ public class Enemy : MonoBehaviour {
         //setup Invincibility
         isInvincible = false;
         invincibilityFrames = 0.0f;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         Movement();
+        Invincibility();
         CheckHealth();
-	}
+    }
 
     //check if enemy is colliding with something
     private void OnTriggerStay2D(Collider2D collision)
@@ -49,29 +53,32 @@ public class Enemy : MonoBehaviour {
         {
             print("Player hit");
 
-            if(playerWeapon.GetComponent<WeaponScript>().isAttacking)
+            if (playerWeapon.GetComponent<WeaponScript>().isAttacking)
             {
                 //if enemy is not invincible
                 if (!isInvincible)
                 {
                     health--;
+                    isInvincible = true;
+                    KnockBack();
                 }
+            }
 
-                Debug.Log("Hit");
 
-           
-                //enemy has been hit
-                Invincibility();
+            Debug.Log("Hit");
 
-                
-            }   
+
+            //enemy has been hit
+            Invincibility();
         }
     }
 
-    //Checks if Enemy Health has been reduced to 0
+    /// <summary>
+    /// Checks if Enemy Health has been reduced to 0
+    /// </summary>
     void CheckHealth()
     {
-        if(health <= 0)
+        if (health <= 0)
         {
             //enemy is dead, destroy it
             Destroy(gameObject);
@@ -94,24 +101,48 @@ public class Enemy : MonoBehaviour {
         transform.position += direction * Time.deltaTime;
     }
 
-    //temporarily makes the enemy invincible
+
+    /// <summary>
+    /// Check and handle for invincibility
+    /// </summary>
     void Invincibility()
     {
-        //make enemy invincible
-        isInvincible = true;
+        //check if player is invincible
+        if (isInvincible)
+        {
+            //check if enough time has passed
+            if (invincibilityFrames >= 0.175f)
+            {
+                //reset invincibility
+                invincibilityFrames = 0.0f;
+                isInvincible = false;
+            }
+            else
+            {
+                //increase frames
+                invincibilityFrames += Time.deltaTime;
+            }
+        }
+    }
 
-        //check if enough time has passed
-        if(invincibilityFrames >= 0.125f)
-        {
-            //reset invincibility
-            invincibilityFrames = 0.0f;
-            isInvincible = false;
-        }
-        else
-        {
-            Debug.Log("invincible");
-            invincibilityFrames += Time.deltaTime;
-        }
+    /// <summary>
+    /// knocks the enemy back from the player
+    /// </summary>
+    void KnockBack()
+    {
+        //get enemy and player positions
+        Vector2 playerPos = playerObject.transform.position;
+        Vector2 enemyPos = transform.position;
+
+        //get position difference
+        Vector3 difference = enemyPos - playerPos;
+
+        //normalize difference
+        difference = difference.normalized;
+
+        //knockback enemy
+        transform.position = transform.position + difference;
+
     }
 
 }

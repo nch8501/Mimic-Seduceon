@@ -31,7 +31,7 @@ public class playerScript : MonoBehaviour {
 
         //check and handle Invincibility
         Invincibility();
-
+        //CheckHealth();
 	}
 
     //checks for collisions
@@ -87,6 +87,18 @@ public class playerScript : MonoBehaviour {
             }
 
 
+        }
+    }
+
+    /// <summary>
+    /// Checks if Enemy Health has been reduced to 0
+    /// </summary>
+    void CheckHealth()
+    {
+        if (health <= 0)
+        {
+            //enemy is dead, destroy it
+            Destroy(GameObject.FindGameObjectWithTag("Player"));
         }
     }
 
