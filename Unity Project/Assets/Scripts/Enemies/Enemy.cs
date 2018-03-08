@@ -7,21 +7,37 @@ public abstract class Enemy : MonoBehaviour
     // Purpose: Basic Enemy class (to be inheritied)
     // Limitations: None
 
+    // Fields
     public GameObject playerObject; //the player Gameobject
     public GameObject playerWeapon; //the player weapon Gameobject
-
-    [SerializeField]
-    private int health; 
+    private EnemyManager manager;
 
     // Constants to be set in the editor
+    [SerializeField]
+    private int MAXHEALTH;
+    [SerializeField]
+    private int DAMAGE;
     [SerializeField]
     private float SPEED;
     [SerializeField]
     protected float AGGRORANGE;
 
+    // Other
+    private int health;
+
     // INVINCIBILITY
     public bool isInvincible;
     public float invincibilityFrames;
+
+    // Properties
+    /// <summary>
+    /// The EnemyManager that created this enemy
+    /// </summary>
+    public EnemyManager Manager
+    {
+        get { return manager; }
+        set { manager = value; }
+    }
 
     // Use this for initialization
     protected virtual void Start()
@@ -38,6 +54,9 @@ public abstract class Enemy : MonoBehaviour
 
         // Convert agroRange to distance squared
         AGGRORANGE *= AGGRORANGE;
+
+        // Give health
+        health = MAXHEALTH;
     }
 
     // Update is called once per frame
@@ -146,7 +165,30 @@ public abstract class Enemy : MonoBehaviour
 
         //knockback enemy
         transform.position = transform.position + difference;
-
     }
 
+    /// <summary>
+    /// Have this enemy Take Damage
+    /// </summary>
+    /// <param name="damage">Damage to Take</param>
+    public virtual void TakeDamage(int damage)
+    {
+        health -= damage;
+        
+        // If damage taken...
+        if (damage > 0)
+        {
+            // Make sure not dead
+            CheckHealth();
+        }
+        // If healed...
+        else if (damage < 0)
+        {
+            // Make sure health is not more than max
+            if (health > MAXHEALTH)
+            {
+                health = MAXHEALTH;
+            }
+        }
+    }
 }
