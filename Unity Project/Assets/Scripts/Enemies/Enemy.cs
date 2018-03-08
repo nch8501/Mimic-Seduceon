@@ -10,16 +10,21 @@ public abstract class Enemy : MonoBehaviour
     public GameObject playerObject; //the player Gameobject
     public GameObject playerWeapon; //the player weapon Gameobject
 
-    public int health; //enemy's health
+    [SerializeField]
+    private int health; 
 
+    // Constants to be set in the editor
     [SerializeField]
     private float SPEED;
+    [SerializeField]
+    protected float AGGRORANGE;
 
+    // INVINCIBILITY
     public bool isInvincible;
     public float invincibilityFrames;
 
     // Use this for initialization
-    protected virtual void Start(int health)
+    protected virtual void Start()
     {
         //setup playerObject
         playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -27,19 +32,23 @@ public abstract class Enemy : MonoBehaviour
         //setup player weapon
         playerWeapon = playerObject.transform.GetChild(0).transform.GetChild(0).gameObject;
 
-        this.health = health;
-
         //setup Invincibility
         isInvincible = false;
         invincibilityFrames = 0.0f;
+
+        // Convert agroRange to distance squared
+        AGGRORANGE *= AGGRORANGE;
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        Movement();
-        Invincibility();
-        CheckHealth();
+        if ((playerObject.transform.position - transform.position).sqrMagnitude < AGGRORANGE)
+        {
+            Movement();
+            Invincibility();
+            CheckHealth();
+        }
     }
 
     //check if enemy is colliding with something
@@ -96,7 +105,6 @@ public abstract class Enemy : MonoBehaviour
         // Add to the player as time dependent
         transform.position += direction * Time.deltaTime;
     }
-
 
     /// <summary>
     /// Check and handle for invincibility
