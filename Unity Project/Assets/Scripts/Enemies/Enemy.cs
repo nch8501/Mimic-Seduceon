@@ -24,6 +24,7 @@ public abstract class Enemy : MonoBehaviour
 
     // Other
     private int health;
+    private bool isAggroed = false;
 
     // INVINCIBILITY
     public bool isInvincible;
@@ -62,8 +63,9 @@ public abstract class Enemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if ((playerObject.transform.position - transform.position).sqrMagnitude < AGGRORANGE)
+        if ((playerObject.transform.position - transform.position).sqrMagnitude < AGGRORANGE || isAggroed)
         {
+            isAggroed = true;
             Movement();
             Invincibility();
             CheckHealth();

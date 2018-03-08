@@ -10,15 +10,23 @@ public class EnemyManager : MonoBehaviour {
     [SerializeField]
     private GameObject[] enemyPrefabs;
 
-    // Array of places for enemies to spawn
-    [SerializeField]
-    private GameObject[] spawnPoints;
+    // List of places for enemies to spawn
+    private List<GameObject> spawnPoints;
 
     public List<GameObject> enemies = new List<GameObject>();   //list of all active enemies
 
 
 	// Use this for initialization
 	void Start () {
+        // Create List of spawn points
+        spawnPoints = new List<GameObject>();
+
+        // Get the spawn Points
+        foreach (Transform child in transform)
+        {
+            spawnPoints.Add(child.gameObject);
+        }
+
         // Spawn a random enemy at each of the spawn points
         Quaternion zero = Quaternion.Euler(0, 0, 0);
         foreach (GameObject spawner in spawnPoints)
