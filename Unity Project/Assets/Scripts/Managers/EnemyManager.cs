@@ -10,32 +10,21 @@ public class EnemyManager : MonoBehaviour {
     [SerializeField]
     private GameObject[] enemyPrefabs;
 
+    // Array of places for enemies to spawn
+    [SerializeField]
+    private GameObject[] spawnPoints;
+
     public List<GameObject> enemies = new List<GameObject>();   //list of all active enemies
 
 
 	// Use this for initialization
 	void Start () {
-
-
-        //create some enemies
-        Vector3 pos = new Vector3(2.0f, 0.0f, 0.0f);
-        Quaternion quat = new Quaternion();
-   
-        GameObject temp = Instantiate(RandomEnemyPrefab(), pos, quat);
-        //add enemy to enemies
-        enemies.Add(temp);
-
-        pos.Set(1.0f, 4.0f, 0.0f);
-        temp = Instantiate(RandomEnemyPrefab(), pos, quat);
-        enemies.Add(temp);
-
-        pos.Set(-2.0f, 0.0f, 0.0f);
-        temp = Instantiate(RandomEnemyPrefab(), pos, quat);
-        enemies.Add(temp);
-
-        pos.Set(-5.0f, -1.0f, 0.0f);
-        temp = Instantiate(RandomEnemyPrefab(), pos, quat);
-        enemies.Add(temp);
+        // Spawn a random enemy at each of the spawn points
+        Quaternion zero = Quaternion.Euler(0, 0, 0);
+        foreach (GameObject spawner in spawnPoints)
+        {
+            enemies.Add(Instantiate(RandomEnemyPrefab(), spawner.transform.position,zero));
+        }
     }
 	
 	// Update is called once per frame
