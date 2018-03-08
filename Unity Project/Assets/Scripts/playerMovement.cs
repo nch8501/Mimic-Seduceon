@@ -13,7 +13,9 @@ public class playerMovement : MonoBehaviour {
     private float rollWindow = 0;
     private float rollWindowCap = 1;
     private bool isRolling = false;
+    private bool hasController = false;
     private Vector3 rollDestination = Vector3.zero;
+    private float rotateAngle = 0;
 
     private objectScript interactingObject;
     private bool canInteract = false;
@@ -32,6 +34,10 @@ public class playerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            hasController = !hasController;
+        }
         if (isInteracting) //if you're interacting with something, you shouldn't be moving all over the place
         {
             Interact();
@@ -49,60 +55,72 @@ public class playerMovement : MonoBehaviour {
     void Movement()
     {
         //check keyboard input
-        if(Input.anyKey)
+        //if (Input.anyKey)
+        //{
+        /**if (Input.GetMouseButton(1)) //Code for mouse movement, 100% needs to be optimized if used
         {
-            /**if (Input.GetMouseButton(1)) //Code for mouse movement, 100% needs to be optimized if used
-            {
-                Vector2 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-                Vector3 playerPos = Camera.main.WorldToViewportPoint(playerObject.transform.position);
+            Vector2 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            Vector3 playerPos = Camera.main.WorldToViewportPoint(playerObject.transform.position);
 
-                Vector2 translateVector = mousePos - new Vector2(playerPos.x, playerPos.y);
-                translateVector.Normalize();
-                translateVector /= 10;
+            Vector2 translateVector = mousePos - new Vector2(playerPos.x, playerPos.y);
+            translateVector.Normalize();
+            translateVector /= 10;
 
-                playerObject.transform.Translate(translateVector);
-            }**/
+            playerObject.transform.Translate(translateVector);
+        }**/
 
-            Vector3 movement = Vector3.zero;
-            //y movement
-            if (Input.GetKey(KeyCode.W))
-            {
-                movement += Vector3.up;
-            }
-            else if(Input.GetKey(KeyCode.S))
-            {
-                movement += Vector3.down;
-            }
+        Vector3 movement = Vector3.zero;
+        //y movement
 
-            //x movement
-            if (Input.GetKey(KeyCode.D))
-            {
-                movement += Vector3.right;
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                movement += Vector3.left;
-            }
-            
-            if (Input.GetKeyDown(KeyCode.E) && canInteract) //Begin Conversation/Interaction
-            {
-                canInteract = false;
-                isInteracting = true;
-                interactingObject.Interact();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space) && !isRolling)
-            {
-                isRolling = true;
-            }
-
-            transform.position+=movement.normalized * speed * Time.deltaTime;
+        if (Input.GetAxis("LeftStickY") != 0)
+        {
+            movement.y = Input.GetAxis("LeftStickY");
         }
+        else if (Input.GetKey(KeyCode.W))
+        {
+            movement += Vector3.up;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            movement += Vector3.down;
+        }
+
+        //x movement
+        if (Input.GetAxis("LeftStickX") != 0)
+        {
+            movement.x = Input.GetAxis("LeftStickX");
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            movement += Vector3.left;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            movement += Vector3.right;
+        }
+
+        if (Input.GetButton("Interact") && canInteract) //Begin Conversation/Interaction
+        {
+            canInteract = false;
+            isInteracting = true;
+            interactingObject.Interact();
+        }
+
+        if (Input.GetButton("Special") && !isRolling) //It certainly is special
+        {
+            isRolling = true;
+        }
+
+        if (movement.magnitude > 1)
+        {
+            movement.Normalize();
+        }
+        transform.position+=movement * speed * Time.deltaTime;
     }
 
     void Interact()
     {
-        if (Input.GetKey(KeyCode.Escape)) //Get me out of this conversation!
+        if (Input.GetButton("Back")) //Get me out of this conversation!
         {
             interactingObject.FinishInteracting(false);
         }
@@ -118,16 +136,26 @@ public class playerMovement : MonoBehaviour {
     void RotateTowardsMouse()
     {
         //get mouse location
-        Vector2 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        if (hasController) //this is ugly but it's really late and i want to finish it
+        {
+            rotateAngle += Input.GetAxis("L2") * 3;
+            rotateAngle -= Input.GetAxis("R2") * 3;
 
-        //get player's current position
-        Vector3 playerPos = Camera.main.WorldToViewportPoint(playerObject.transform.position);
+            playerSprite.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, rotateAngle));
+        }
+        else
+        {
+            Vector2 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
-        //find angle between these
-        float angle = Mathf.Atan2(playerPos.y - mousePos.y, playerPos.x - mousePos.x) * Mathf.Rad2Deg + 90;
+            //get player's current position
+            Vector3 playerPos = Camera.main.WorldToViewportPoint(playerObject.transform.position);
 
-        //set player angle
-        playerSprite.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, angle));
+            //find angle between these
+            float angle = Mathf.Atan2(playerPos.y - mousePos.y, playerPos.x - mousePos.x) * Mathf.Rad2Deg + 90;
+
+            //set player angle
+            playerSprite.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, angle));
+        }
 
 
 

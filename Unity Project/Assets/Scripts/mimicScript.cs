@@ -24,7 +24,7 @@ public class mimicScript : objectScript {
 	void Update () {
 		if (isActiveObject)
         {
-            if (Input.GetKeyDown(KeyCode.Space)) //hurry it up you stupid mimic
+            if (Input.GetButtonDown("Interact")) //hurry it up you stupid mimic
             {
                 if (timer > .1f)
                 {
@@ -88,7 +88,7 @@ public class mimicScript : objectScript {
 
             closedChestSprite.enabled = true;
             openChestSprite.enabled = false;
-            textIndex = 0;
+            textIndex = -1;
         }
     }
 

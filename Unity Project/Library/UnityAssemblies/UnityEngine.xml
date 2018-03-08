@@ -4,7 +4,6 @@
     <assembly>
       <name>UnityEngine</name>
     </assembly>
-<<<<<<< HEAD
     <member name="T:UnityEngine.AccelerationEvent">
       <summary>
         <para>Structure describing acceleration status of the device.</para>
@@ -53344,7 +53343,5 @@ The latter will disable seeking on the clip (with .time and/or .timeSamples).</p
         <para>Base class for all yield instructions.</para>
       </summary>
     </member>
-=======
->>>>>>> bac2f08c34860ad263652f4e6e63d255eb55fe88
   </members>
 </doc>

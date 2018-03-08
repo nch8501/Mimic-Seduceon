@@ -36,9 +36,13 @@ public class WeaponScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (!isAttacking)
+        {
+            //check if attacking
+            AttackCheck();
+        }
         //check if attacking
-        if(isAttacking)
+        if (isAttacking)
         {
             weaponObject.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -54,18 +58,13 @@ public class WeaponScript : MonoBehaviour {
                 attackWindow -= .1f;
             }
         }
-        else
-        {
-            //check if attacking
-            AttackCheck();
-        }
 	}
 
 
     void AttackCheck()
     {
         //check if spacebar is pressed
-        if(Input.GetKeyDown(KeyCode.Mouse0) && attackWindow <= 0.0f)
+        if(Input.GetButton("Attack") && attackWindow <= 0.0f)
         {
             //set isAttacking to true
             isAttacking = true;
@@ -89,7 +88,15 @@ public class WeaponScript : MonoBehaviour {
         weaponObject.GetComponent<Transform>().localPosition = playerObject.GetComponent<Transform>().localPosition + offset;
 
 
-        weaponObject.transform.right = -(playerObject.transform.localPosition - weaponObject.transform.localPosition);
+        
+        if (weaponObject.transform.position.y < playerObject.transform.position.y)
+        {
+            weaponObject.transform.right = playerObject.transform.localPosition - weaponObject.transform.localPosition;
+        }
+        else
+        {
+            weaponObject.transform.right = -(playerObject.transform.localPosition - weaponObject.transform.localPosition); //flips sword while upside down, change this later
+        }
 
         //Vector3 target = playerObject.GetComponent<Transform>().localPosition - weaponObject.GetComponent<Transform>().localPosition;
         //weaponObject.GetComponent<Transform>().LookAt(target);
