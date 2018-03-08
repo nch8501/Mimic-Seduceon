@@ -23,7 +23,7 @@ public class EnemyManager : MonoBehaviour {
         Quaternion zero = Quaternion.Euler(0, 0, 0);
         foreach (GameObject spawner in spawnPoints)
         {
-            enemies.Add(Instantiate(RandomEnemyPrefab(), spawner.transform.position,zero));
+            enemies.Add(Instantiate(RandomEnemyPrefab(), spawner.transform.position, zero));
         }
     }
 	

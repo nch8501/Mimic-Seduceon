@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
+    // Purpose: Basic Enemy class (to be inheritied)
+    // Limitations: None
 
     public GameObject playerObject; //the player Gameobject
     public GameObject playerWeapon; //the player weapon Gameobject
@@ -16,11 +18,8 @@ public class Enemy : MonoBehaviour
     public bool isInvincible;
     public float invincibilityFrames;
 
-
-
-
     // Use this for initialization
-    void Start()
+    protected virtual void Start(int health)
     {
         //setup playerObject
         playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -28,7 +27,7 @@ public class Enemy : MonoBehaviour
         //setup player weapon
         playerWeapon = playerObject.transform.GetChild(0).transform.GetChild(0).gameObject;
 
-        health = 2;
+        this.health = health;
 
         //setup Invincibility
         isInvincible = false;
@@ -36,7 +35,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         Movement();
         Invincibility();
@@ -63,10 +62,7 @@ public class Enemy : MonoBehaviour
                     KnockBack();
                 }
             }
-
-
             Debug.Log("Hit");
-
 
             //enemy has been hit
             Invincibility();
@@ -88,7 +84,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Move the Enemy toward the player
     /// </summary>
-    void Movement()
+    protected virtual void Movement()
     {
         // Get the vector from the enemy to the player
         Vector3 direction = Vector3.zero;
@@ -105,7 +101,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Check and handle for invincibility
     /// </summary>
-    void Invincibility()
+    protected void Invincibility()
     {
         //check if player is invincible
         if (isInvincible)
@@ -128,7 +124,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// knocks the enemy back from the player
     /// </summary>
-    void KnockBack()
+    protected void KnockBack()
     {
         //get enemy and player positions
         Vector2 playerPos = playerObject.transform.position;
