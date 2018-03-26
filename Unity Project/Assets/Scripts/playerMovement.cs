@@ -46,7 +46,7 @@ public class playerMovement : MonoBehaviour {
         {
             Movement();
             RotateTowardsMouse();
-            Roll();
+            //Roll();
         }
        // CheckForObjects();
 	}
