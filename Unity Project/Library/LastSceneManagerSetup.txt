@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/BenIsAnAssholeDesigner.unity
+- path: Assets/Scenes/Menus/Title Screen.unity
   isLoaded: 1
   isActive: 1

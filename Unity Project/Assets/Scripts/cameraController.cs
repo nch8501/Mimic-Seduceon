@@ -23,8 +23,8 @@ public class cameraController : MonoBehaviour {
     {
         Vector3 playerPos = playerObject.transform.position;
 
-        float xBuffer = 5.0f;
-        float yBuffer = 3.0f;
+        float xBuffer = 3.0f;
+        float yBuffer = 1.5f;
 
         if(playerPos.x - transform.position.x >= xBuffer)
         {
