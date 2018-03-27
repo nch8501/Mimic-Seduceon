@@ -39,8 +39,10 @@ public class enemyManagerManager : MonoBehaviour {
         for (int i = 0; i < managerList.Count; i++)
         {
             if (managerList[i].enemies.Count != 0)
+            {
                 Debug.Log("Enemycount: " + EnemyCount);
                 return false;
+            }
         }
         return true;
     }
