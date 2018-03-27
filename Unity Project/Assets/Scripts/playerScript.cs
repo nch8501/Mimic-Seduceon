@@ -9,6 +9,7 @@ public class playerScript : MonoBehaviour {
 
     float invincibilityFrames;  //how long invincibility lasts
     bool isInvincible;  //if the player is invincible
+    public SpriteRenderer[] healthBar;
 
     SpriteRenderer playerSpriteRenderer;    //player's sprite renderer
 
@@ -79,11 +80,19 @@ public class playerScript : MonoBehaviour {
                 //decrement health
                 health--;
 
+                //change healthbar
+                if (health >= 0)
+                {
+                    healthBar[health + 1].enabled = false;
+                    healthBar[health].enabled = true;
+                }
+
                 //make player invincible
                 isInvincible = true;
 
                 //make player red
                 playerSpriteRenderer.color = Color.red;
+                
             }
 
 

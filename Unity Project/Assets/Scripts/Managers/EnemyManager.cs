@@ -14,12 +14,15 @@ public class EnemyManager : MonoBehaviour {
     private Transform[] spawnPoints;
 
     public List<GameObject> enemies = new List<GameObject>();   //list of all active enemies
+    public enemyManagerManager manager;
 
 
 	// Use this for initialization
 	void Start () {
         // Get the spawn Points
         spawnPoints = gameObject.GetComponentsInChildren<Transform>();
+        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<enemyManagerManager>();
+        manager.ManagerList.Add(this);
 
         // Spawn a random enemy at each of the spawn points
         Quaternion zero = Quaternion.Euler(0, 0, 0);
@@ -31,6 +34,7 @@ public class EnemyManager : MonoBehaviour {
                 enemies.Add(Instantiate(enemy, spawnPoints[i].position, zero));
             }
         }
+
     }
 	
 	// Update is called once per frame

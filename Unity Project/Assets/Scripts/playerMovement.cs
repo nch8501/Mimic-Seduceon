@@ -20,6 +20,10 @@ public class playerMovement : MonoBehaviour {
     private objectScript interactingObject;
     private bool canInteract = false;
     private bool isInteracting = false;
+    public bool IsInteracting
+    {
+        get { return isInteracting; }
+    }
 
     [SerializeField]
     private float speed;

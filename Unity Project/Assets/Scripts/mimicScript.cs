@@ -7,12 +7,15 @@ public class mimicScript : objectScript {
 
     public SpriteRenderer openChestSprite;
     public SpriteRenderer closedChestSprite;
+    public SpriteRenderer wineSprite;
+    public enemyManagerManager enemyManagerManager;
 
-
-    public SpriteRenderer[] textArray;
+    public SpriteRenderer[] textArray; //make sure there's empty space afterwards
+    public SpriteRenderer[][] responseArray;
 
     float timer = 0;
-    int textIndex = -1;
+    public int textIndex = -1;
+    public int exitIndex; //the last line of dialogue if you didn't fuck up
 
 
 	// Use this for initialization
@@ -32,18 +35,30 @@ public class mimicScript : objectScript {
                 }
             }
 
+
             if (timer <= 0)
             {
-                if (textIndex + 2 <= textArray.Length)
+                if (textArray[textIndex + 1] != null)
                 {
                     textIndex++;
                     textArray[textIndex].enabled = true;
+                    if (textIndex == 2)
+                    {
+                        wineSprite.enabled = true;
+                    }
 
                     timer = 2.0f;
                 }
                 else
                 {
-                    FinishInteracting(true);
+                    if (textIndex == exitIndex)
+                    {
+                        FinishInteracting(true);
+                    }
+                    else
+                    {
+                        FinishInteracting(false);
+                    }
                 }
             }
 
@@ -68,6 +83,11 @@ public class mimicScript : objectScript {
         overlayText.enabled = false;
 
         isActiveObject = true;
+
+        if (enemyManagerManager.EnemyCount != 0) //in the future, this would be a submimic of mimics, but right now we just have one
+        {
+            textIndex = 9;
+        }
     }
 
     public override void FinishInteracting(bool dialogComplete)
@@ -79,7 +99,7 @@ public class mimicScript : objectScript {
         if (dialogComplete || isFinished) //if you're done, you're not going back
         {
             //this is where a mimic would give you an item or powerup
-            textIndex = textArray.Length - 2;
+            textIndex = exitIndex - 1;
             isFinished = true;
         }
         else

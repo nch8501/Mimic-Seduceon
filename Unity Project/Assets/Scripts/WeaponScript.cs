@@ -7,6 +7,7 @@ public class WeaponScript : MonoBehaviour {
     //weapon object
     public GameObject weaponObject;
     GameObject playerObject;
+    public playerMovement actualPlayerObject;
 
     //whether or not the weapon is attacking
     public bool isAttacking;
@@ -36,7 +37,7 @@ public class WeaponScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!isAttacking)
+		if (!isAttacking && !actualPlayerObject.IsInteracting)
         {
             //check if attacking
             AttackCheck();
